@@ -31,11 +31,13 @@ router = APIRouter(
 allow_get_resource = PermissionChecker(
     [PermissionType.can_read_any.value, PermissionType.can_api_read.value]
 )
-allow_create_resource = PermissionChecker([PermissionType.can_create_any.value])
-allow_delete_resource = PermissionChecker([PermissionType.can_delete_any.value])
+allow_create_resource = PermissionChecker(
+    [PermissionType.can_create_any.value])
+allow_delete_resource = PermissionChecker(
+    [PermissionType.can_delete_any.value])
 allow_edit_resource = PermissionChecker([PermissionType.can_edit_any.value])
-allow_edit_profile = PermissionChecker(
-    [PermissionType.can_edit_any.value, PermissionType.can_change_password.value]
+allow_create_user_and_change_password = PermissionChecker(
+    [PermissionType.can_create_user.value, PermissionType.can_change_password.value]
 )
 
 
@@ -89,7 +91,8 @@ def create_new_user_account(
     user_account = services.get_user_account_by_username(db, req.username)
 
     if user_account:
-        raise HTTPException(status_code=400, detail="User account already existed")
+        raise HTTPException(
+            status_code=400, detail="User account already existed")
 
     return services.create_user_account(db, req)
 
@@ -199,7 +202,7 @@ def delete_sys_user(
 @router.patch(
     "/edit",
     response_model=schemas.UserOut,
-    dependencies=[Depends(allow_edit_profile)],
+    dependencies=[Depends(allow_create_user_and_change_password)],
     **openapi_user_account_mgmt_edit_by_user_id,
 )
 def update_user_account(
@@ -214,7 +217,7 @@ def update_user_account(
 @router.patch(
     "/change_password",
     response_model=schemas.UserOut,
-    dependencies=[Depends(allow_edit_profile)],
+    dependencies=[Depends(allow_create_user_and_change_password)],
     **openapi_user_account_mgmt_edit_by_user_id,
 )
 def update_self_password(

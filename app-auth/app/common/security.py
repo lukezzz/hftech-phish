@@ -4,7 +4,8 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.common.db import get_db
 from fastapi_jwt_auth import AuthJWT
-import uuid, logging
+import uuid
+import logging
 from enum import Enum, IntEnum
 from app import models
 from cryptography.fernet import Fernet
@@ -13,7 +14,7 @@ from cryptography.fernet import Fernet
 pwd_context = CryptContext(schemes=["pbkdf2_sha512"], deprecated="auto")
 
 
-## password func
+# password func
 def get_password_hash(password: str) -> str:
     return pwd_context.hash(password)
 
@@ -22,12 +23,12 @@ def verify_password(plain_password, hashed_password) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-## generate uuid
+# generate uuid
 def gen_guid():
     return str(uuid.uuid4())
 
 
-## encrypt password/token 加密
+# encrypt password/token 加密
 def encrypt_pwd(password: str, key: str) -> str:
     try:
         fernet = Fernet(key)
@@ -37,7 +38,7 @@ def encrypt_pwd(password: str, key: str) -> str:
         print(err)
 
 
-## decrypt password/token 解密
+# decrypt password/token 解密
 def decrypt_pwd(enc_password: str, key: str) -> str:
     try:
         fernet = Fernet(key)
@@ -47,8 +48,8 @@ def decrypt_pwd(enc_password: str, key: str) -> str:
         print(err)
 
 
-## role, permssion depends
-### get current user object
+# role, permssion depends
+# get current user object
 def get_current_user(
     db: Session = Depends(get_db), Authorize: AuthJWT = Depends()
 ) -> Any:
@@ -64,7 +65,7 @@ def get_current_user(
     return user
 
 
-### check permission via comapre user->roles->permssions with api permission list
+# check permission via comapre user->roles->permssions with api permission list
 class PermissionChecker:
     def __init__(self, allowed_permissions: List):
         self.allowed_permissions = allowed_permissions
@@ -88,7 +89,6 @@ class PermissionType(Enum):
     can_edit_any = "can_edit_any"
     can_create_any = "can_create_any"
     can_delete_any = "can_delete_any"
-    can_send_sms = "can_send_sms"
-    can_make_call = "can_make_call"
+    can_create_user = "can_create_user"
     can_change_password = "can_change_password"
     can_api_read = "can_api_read"

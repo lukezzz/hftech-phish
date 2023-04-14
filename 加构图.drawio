@@ -1,0 +1,58 @@
+<mxfile host="65bd71144e">
+    <diagram id="0eeWYrBUEhmAYQi8ZlcX" name="加构图">
+        <mxGraphModel dx="1036" dy="745" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="容器" style="rounded=0;whiteSpace=wrap;html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="150" y="200" width="730" height="530" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Nginx" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="DB" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="760" y="480" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Redis" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+                    <mxGeometry x="760" y="380" width="60" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="UserMgmt&lt;br&gt;用户/注册" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+                    <mxGeometry x="354" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Campaign" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="354" y="350" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="配置" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="350" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="模版" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="420" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Job/Callback" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="354" y="570" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="DAG" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="570" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Webhook" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="354" y="650" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Init" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="170" y="410" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="附件" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="500" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Report" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="650" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;html=1;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.services.word_automation_services;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="536" width="60" height="49" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="550" y="280" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
