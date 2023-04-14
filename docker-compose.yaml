@@ -1,0 +1,90 @@
+version: "3.3"
+networks:
+  hftech-pfish-dev:
+    external: true
+
+x-app-common:
+    &app-common
+    build:
+        context: ./
+        dockerfile: build/service/Dockerfile
+        args:
+            ENVIRONMENT: development
+    env_file:
+        - .fastapienv
+    depends_on:
+        &app-common-depends-on
+        app-db:
+            condition: service_healthy
+        app-redis:
+            condition: service_healthy
+    networks:
+            - hftech-pfish-dev
+services:
+    app-redis:
+        image: redis
+        restart: always
+        hostname: app-redis
+        ports:
+            - 21279:6379
+        volumes:
+            - ./app-redis:/data
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 5s
+            timeout: 30s
+            retries: 50
+        networks:
+            - hftech-pfish-dev
+
+    app-db:
+        image: postgres:13.4-buster
+        hostname: app-db
+        command: postgres -c listen_addresses='*'
+        environment:
+            - POSTGRES_USER=foresight
+            - POSTGRES_PASSWORD=foresight
+            - POSTGRES_DB=foresight
+            # Uncomment these lines to persist data on the local filesystem.
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        volumes:
+            - ./app-db:/var/lib/postgresql/data
+        ports:
+            - "22133:5432/tcp"
+        healthcheck:
+            test: ["CMD", "pg_isready", "-U", "airflow"]
+            interval: 5s
+            retries: 5
+        restart: always
+        networks:
+            - hftech-pfish-dev
+   
+    app-init:
+        <<: *app-common
+        restart: always
+        ports:
+            - "7160:80"
+        volumes:
+            - ./app-init:/usr/src/app
+    
+    app-auth:
+        <<: *app-common
+        restart: always
+        ports:
+            - "7161:80"
+        volumes:
+            - ./app-auth:/usr/src/app
+        
+    app-nginx:
+        image: nginx
+        restart: unless-stopped
+        volumes:
+            - ./web-console/dist:/usr/share/nginx/web-console
+            - ./app-nginx/dev/conf.d:/etc/nginx/conf.d
+            - ./app-nginx/dev/log/nginx:/var/log/nginx
+            # - ./app-nginx/dev//certs:/etc/nginx/certs
+        ports:
+            - "7789:80"
+            # - "443:443"
+        networks:
+            - hftech-pfish-dev

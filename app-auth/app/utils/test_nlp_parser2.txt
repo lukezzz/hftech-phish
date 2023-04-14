@@ -1,0 +1,443 @@
+Hi Team
+      @Ge Lemon<mailto:gechunhui@gamutsoft.com> This case is being further developed, and the progress will be reported as soon as possible.
+
+Best Regards
+________________________________
+发件人: Endpoint SOC <EndpointSOC@us.mcd.com>
+发送时间: 2023年3月3日 18:39
+收件人: wang01 wren.OD <wren.wang01@cn.mcd.com>; CN Security Incident Response <incident.response@CN.mcd.com>; Zhou Fred <fred.zhou@cn.mcd.com>; Wu Roger <roger.wu@cn.mcd.com>; chen01 cyan <cyan.chen01@cn.mcd.com>; Ge Lemon <gechunhui@gamutsoft.com>
+抄送: Endpoint SOC <EndpointSOC@us.mcd.com>; Elumalai Navinsakthi (Contractor) <navinsakthi.elumalai@us.mcd.com>
+主题: RE: S1 Vigilance – Suspicious Detection Inquiry - Evidence Persistence: CN-XIYLD4J1QQ2 - China CORP - INC14234277 - # 160169
+
+
+Hello Team,
+
+
+
+Gentle reminder(1st Escalation)
+
+Please provide an update on the below email
+
+ACTION REQUIRED:
+
+Please assist with the items below to fully mitigate this threat:
+
+  *   Investigate device(s): CN-XIYLD4J1QQ2 to determine the legitimacy of the file downloaded and whether it is authorized in environment or not
+     *   C:\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe
+  *   If device(s): CN-XIYLD4J1QQ2 is confirmed to host an unauthorized/malicious file:
+     *   Remove the files in question
+        *   Validate any persistence tied to the flagged file(s) are removed from the machine
+        *   Remove the flagged files from all backups or if needed, rebuild the devices for a clean slate
+     *   Instruct the user or local IT team to wipe any recently used removable storage devices to prevent further spread of the flagged file(s)
+     *   Consider removing any unauthorized applications discovered on the flagged device(s)
+     *   Consider disabling autorun from removable storage devices
+     *   Ensure the Endpoint solution is up to date
+     *   Reboot the device
+     *   Run a full-disk virus scan of the flagged device(s) via Sentinel One under the Actions menu by selecting “Initiate Scan “
+        *   [Graphical user interface, text, application, chat or text message    Description automatically generated]
+        *   Note: If assistance is needed, please work with the Endpoint Protection team<https://urldefense.com/v3/__https:/www.atmcd.com/sites/gtrm/SitePage/733731/endpoint-detection-and-response__;!!JZ0iVwK7KX4!HIqbEl3kr-__vcChZJ7zIPMk_A_KSoQZGkWEonu3hy8NzBLf-htqhWi17ttT4-c_Ul8l4ccexs8c9XDKzLAApcY$> to learn how to initiate full-disk virus scans
+     *   Perform a password reset for all accounts tied to the flagged device(s)
+     *   Engage end users and remind them to refrain from:
+        *   Downloading external files from unknown/external sources to their McDonald’s devices
+        *   Connecting unexpected, unsolicited, or unauthorized USBs to McDonald’s owned devices
+        *   Providing credentials to any unauthorized parties or applications
+        *   Performing unauthorized PowerShell Execution
+  *   If determined to be a legitimate activity:
+     *   Provide a detailed description/business case justifying why the flagged activity is tied to legitimate use
+
+
+
+
+
+[cid:image003.png@01D94DEA.74A00370]
+
+
+
+Navinsakthi
+
+GTRM Security Operation Center | McDonald’s Corporation
+
+Global Technology Risk Management<https://urldefense.com/v3/__https:/www.atmcd.com/sites/gtrm/SitePage/1165336/ir-threshold-criteria__;!!Ly9OQR1JJQ!dpYY1EKbwq1bbkuieZ_AJhw0a60oQX9b5Xf0D1dt2C36pww_o44grpO0powaVq9ZeilV32DLd_6BApkmkAwxQIUILQ$>| Service Delivery Assurance  <https://urldefense.com/v3/__https:/www.atmcd.com/sitepage/403274/security-delivery-assurance__;!!Ly9OQR1JJQ!dpYY1EKbwq1bbkuieZ_AJhw0a60oQX9b5Xf0D1dt2C36pww_o44grpO0powaVq9ZeilV32DLd_6BApkmkAwGIUyZjg$>
+
+Email: incident@us.mcd.com<mailto:incident@us.mcd.com>
+
+
+
+
+
+From: wang01 wren.OD <wren.wang01@cn.mcd.com>
+Sent: 02 March 2023 07:14
+To: Elumalai Navinsakthi (Contractor) <navinsakthi.elumalai@us.mcd.com>; CN Security Incident Response <incident.response@CN.mcd.com>; Zhou Fred <fred.zhou@cn.mcd.com>; Wu Roger <roger.wu@cn.mcd.com>; chen01 cyan <cyan.chen01@cn.mcd.com>; Ge Lemon <gechunhui@gamutsoft.com>
+Cc: Endpoint SOC <EndpointSOC@us.mcd.com>
+Subject: 回复: S1 Vigilance – Suspicious Detection Inquiry - Evidence Persistence: CN-XIYLD4J1QQ2 - China CORP - INC14234277 - # 160169
+
+
+
+Hi Lemon
+
+      @Ge Lemon<mailto:gechunhui@gamutsoft.com> Please follow the requirements of the global team and give feedback, thank you.
+
+
+
+Best Regards
+
+________________________________
+
+发件人: Elumalai Navinsakthi (Contractor) <navinsakthi.elumalai@us.mcd.com<mailto:navinsakthi.elumalai@us.mcd.com>>
+发送时间: 2023年3月1日 19:21
+收件人: CN Security Incident Response <incident.response@CN.mcd.com<mailto:incident.response@CN.mcd.com>>; Zhou Fred <fred.zhou@cn.mcd.com<mailto:fred.zhou@cn.mcd.com>>; Wu Roger <roger.wu@cn.mcd.com<mailto:roger.wu@cn.mcd.com>>; chen01 cyan <cyan.chen01@cn.mcd.com<mailto:cyan.chen01@cn.mcd.com>>
+抄送: Endpoint SOC <EndpointSOC@us.mcd.com<mailto:EndpointSOC@us.mcd.com>>
+主题: S1 Vigilance – Suspicious Detection Inquiry - Evidence Persistence: CN-XIYLD4J1QQ2 - China CORP - INC14234277 - # 160169
+
+
+
+Some people who received this message don't often get email from navinsakthi.elumalai@us.mcd.com<mailto:navinsakthi.elumalai@us.mcd.com>. Learn why this is important<https://urldefense.com/v3/__https:/aka.ms/LearnAboutSenderIdentification__;!!JZ0iVwK7KX4!HIqbEl3kr-__vcChZJ7zIPMk_A_KSoQZGkWEonu3hy8NzBLf-htqhWi17ttT4-c_Ul8l4ccexs8c9XDK3Mvf6Fs$>
+
+NOTE: If a market fails to respond to a message within 2 business days, GTRM IR may leverage its authority to isolate this device to prevent risk to the McDonald’s environment. This may cause an impact on business operations for the market.
+
+
+
+Hello China CORP market,
+
+
+
+We received an alert from the Sentinel One Vigilance team indicating that device: CN-XIYLD4J1QQ2 was flagged for suspicious file download detected on 2023-02-01T06:31:01(IST) from the user CORP\CN-shyuanzhao
+
+
+
+Associated file path:
+
+  *   \Device\HarddiskVolume4\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe
+  *   C:\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe"
+
+
+
+REPLY REQUESTED: To avoid another follow-up request, please reply to this email with your acknowledgement within 1 business day of receiving this message.
+
+
+
+ACTION REQUIRED:
+
+Please assist with the items below to fully mitigate this threat:
+
+  *   Investigate device(s): CN-XIYLD4J1QQ2 to determine the legitimacy of the file downloaded and whether it is authorized in environment or not
+
+     *   C:\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe
+
+  *   If device(s): CN-XIYLD4J1QQ2 is confirmed to host an unauthorized/malicious file:
+
+     *   Remove the files in question
+
+        *   Validate any persistence tied to the flagged file(s) are removed from the machine
+        *   Remove the flagged files from all backups or if needed, rebuild the devices for a clean slate
+
+     *   Instruct the user or local IT team to wipe any recently used removable storage devices to prevent further spread of the flagged file(s)
+     *   Consider removing any unauthorized applications discovered on the flagged device(s)
+     *   Consider disabling autorun from removable storage devices
+     *   Ensure the Endpoint solution is up to date
+     *   Reboot the device
+     *   Run a full-disk virus scan of the flagged device(s) via Sentinel One under the Actions menu by selecting “Initiate Scan “
+
+        *   [Graphical user interface, text, application, chat or text message    Description automatically generated]
+        *   Note: If assistance is needed, please work with the Endpoint Protection team<https://urldefense.com/v3/__https:/www.atmcd.com/sites/gtrm/SitePage/733731/endpoint-detection-and-response__;!!JZ0iVwK7KX4!HIqbEl3kr-__vcChZJ7zIPMk_A_KSoQZGkWEonu3hy8NzBLf-htqhWi17ttT4-c_Ul8l4ccexs8c9XDKzLAApcY$> to learn how to initiate full-disk virus scans
+
+     *   Perform a password reset for all accounts tied to the flagged device(s)
+     *   Engage end users and remind them to refrain from:
+
+        *   Downloading external files from unknown/external sources to their McDonald’s devices
+        *   Connecting unexpected, unsolicited, or unauthorized USBs to McDonald’s owned devices
+        *   Providing credentials to any unauthorized parties or applications
+        *   Performing unauthorized PowerShell Execution
+
+  *   If determined to be a legitimate activity:
+
+     *   Provide a detailed description/business case justifying why the flagged activity is tied to legitimate use
+
+
+
+Details:
+
+[cid:image004.png@01D94DEA.74A00370]
+
+Device Name: CN-XIYLD4J1QQ2
+
+Network Adapters:
+
+Name
+
+IP
+
+Mac Address
+
+WLAN
+
+152.141.158.194
+
+20:16:b9:64:8c:be
+
+Console visible IP: 113.140.20.50
+
+Last logged in: CN-shyuanzhao
+
+
+
+Vigilance team’s Analysis:
+
+On the endpoint CN-XIYLD4J1QQ2 multiple PUPs were flagged by the SentinelOne agent that originated from the process PPOJIRABTD.exe.
+
+
+
+FILEPATH: "C:\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe"
+
+Publisher: SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD.
+
+SHA1: 2503fe5ad68dbabbc65300471536bbc967001466
+
+
+
+·       Publisher SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD. is known to bundle PUP software.
+
+·       This suspicious file was downloaded by the user CORP\CN-shyuanzhao from the URL: hxxps://download[.]2345[.]cn/down/PPOJIRABTD.exe
+
+·       Once executed, it gained persistence on the machine
+
+ServiceName: "Protect_2345Explorer"
+
+ServiceName: "Protect_2345Explorer"
+
+ServiceName: "2345Prot"
+
+ServiceName: "2345Iron"
+
+ServiceName: "2345bg"
+
+Task: "\Upgrade 2345Explorer Task"
+
+Key: "\REGISTRY\MACHINE\SYSTEM\ControlSet001\Control\Session Manager", Value: "PendingFileRenameOperations"
+
+·       Publisher SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD. is known to bundle PUP software.
+
+
+
+Completed Actions thus far:
+
+  *    Originating process PPOJIRABTD.exe was marked as threat and remediated the threat
+
+
+
+Main Threat Indicator:
+
+  *   SentinelOne Cloud Persistence
+
+
+
+Sentinel One Threat Links (Last 30 days):
+
+  *   https://usea1-mcd.sentinelone.net/incidents/threats?filter={%22timeTitle%22:%22Last%2030%20Days%22}<https://urldefense.com/v3/__https:/usea1-mcd.sentinelone.net/incidents/threats?filter=*7b*22timeTitle*22:*22Last*2030*20Days*22*7d__;JSUlJSUlJSU!!JZ0iVwK7KX4!HIqbEl3kr-__vcChZJ7zIPMk_A_KSoQZGkWEonu3hy8NzBLf-htqhWi17ttT4-c_Ul8l4ccexs8c9XDKYoXzK7M$>
+
+
+
+Thank you in advance for all your help,
+
+
+
+[cid:image003.png@01D94DEA.74A00370]
+
+
+
+Navinsakthi
+
+GTRM Security Operation Center | McDonald’s Corporation
+
+Global Technology Risk Management<https://urldefense.com/v3/__https:/www.atmcd.com/sites/gtrm/SitePage/1165336/ir-threshold-criteria__;!!Ly9OQR1JJQ!dpYY1EKbwq1bbkuieZ_AJhw0a60oQX9b5Xf0D1dt2C36pww_o44grpO0powaVq9ZeilV32DLd_6BApkmkAwxQIUILQ$>| Service Delivery Assurance  <https://urldefense.com/v3/__https:/www.atmcd.com/sitepage/403274/security-delivery-assurance__;!!Ly9OQR1JJQ!dpYY1EKbwq1bbkuieZ_AJhw0a60oQX9b5Xf0D1dt2C36pww_o44grpO0powaVq9ZeilV32DLd_6BApkmkAwGIUyZjg$>
+
+Email: incident@us.mcd.com<mailto:incident@us.mcd.com>
+
+
+
+
+
+
+
+
+
+Vigilance Email:
+
+Dear McD SOC,
+
+Vigilance has encountered a verified threat in your environment that required us to issue a remediation command.
+
+Threat URL example:  https://usea1-mcd.sentinelone.net/incidents/threats/1610648487975853391/overview<https://urldefense.com/v3/__https:/usea1-mcd.sentinelone.net/incidents/threats/1610648487975853391/overview__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmJBZn0U$> (Manual)
+Full Threat List: https://usea1-mcd.sentinelone.net/incidents/threats?filter={%22uuid__contains%22:%22260d1c7c50db41b6827adca6e15346bc%22,%22timeTitle%22:%22Last%2030%20Days%22}<https://urldefense.com/v3/__https:/usea1-mcd.sentinelone.net/incidents/threats?filter=*7B*22uuid__contains*22:*22260d1c7c50db41b6827adca6e15346bc*22,*22timeTitle*22:*22Last*2030*20Days*22*7D__;JSUlJSUlJSUlJSUl!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNnCXax2B$>
+
+Main Threat Indicator:  SentinelOne Cloud
+Persistence
+
+•       Application registered itself to become persistent via COM object
+
+•       MITRE : Persistence [T1546.015<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1546/015/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmD8hBK-$>]
+
+•       MITRE : Privilege Escalation [T1546.015<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1546/015/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmD8hBK-$>]
+
+•       Application registered itself to become persistent via scheduled task
+
+•       MITRE : Persistence [T1053.005<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1053/005/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNlpNTBfm$>]
+
+•       MITRE : Execution [T1053.005<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1053/005/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNlpNTBfm$>]
+
+•       MITRE : Privilege Escalation [T1053.005<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1053/005/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNlpNTBfm$>]
+
+•       Application registered itself to become persistent via an autorun
+
+•       MITRE : Persistence [T1547.001<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1547/001/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNsiEkRwi$>]
+
+•       MITRE : Privilege Escalation [T1547.001<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1547/001/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNsiEkRwi$>]
+
+•       Application registered itself to become persistent via service
+
+•       MITRE : Privilege Escalation [T1543.003<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1543/003/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmOni8rM$>][T1547.001<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1547/001/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNsiEkRwi$>]
+
+•       MITRE : Persistence [T1543.003<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1543/003/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmOni8rM$>][T1547.001<https://urldefense.com/v3/__https:/attack.mitre.org/techniques/T1547/001/__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNsiEkRwi$>]
+
+
+Analysis:
+On the endpoint CN-XIYLD4J1QQ2 multiple PUPs were flagged by the SentinelOne agent that originated from the process PPOJIRABTD.exe.
+
+FILEPATH: "C:\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe"
+
+
+
+  Publisher: SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD.
+
+
+
+  SHA1: 2503fe5ad68dbabbc65300471536bbc967001466
+
+Publisher SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD. is known to bundle PUP software.
+
+This suspicious file was downloaded by the user CORP\CN-shyuanzhao from the URL: hxxps://download[.]2345[.]cn/down/PPOJIRABTD.exe
+
+Once executed, it gained persistence on the machine
+
+ServiceName: "Protect_2345Explorer"
+
+
+
+  ServiceName: "Protect_2345Explorer"
+
+
+
+  ServiceName: "2345Prot"
+
+
+
+  ServiceName: "2345Iron"
+
+
+
+  ServiceName: "2345bg"
+
+
+
+  Task: "\Upgrade 2345Explorer Task"
+
+
+
+  Key: "\REGISTRY\MACHINE\SYSTEM\ControlSet001\Control\Session Manager", Value: "PendingFileRenameOperations"
+
+
+Publisher SHANGHAI 2345 MOBILE TECHNOLOGY CO., LTD. is known to bundle PUP software.
+
+Vigilance Actions:
+We have manually marked the originating process PPOJIRABTD.exe as a threat and remediated the threat.
+
+Recommendations:
+
+•       Please check if remediation was successful
+
+•       Kindly verify whether the software is allowed in your environment.
+
+
+Alert Information:
+
+File Name: PPOJIRABTD.exe
+
+
+
+  Threat ID: 1610648487975853391
+
+
+
+  Threat URL: https://usea1-mcd.sentinelone.net/incidents/threats/1610648487975853391/overview<https://urldefense.com/v3/__https:/usea1-mcd.sentinelone.net/incidents/threats/1610648487975853391/overview__;!!JZ0iVwK7KX4!FqJ59NpLqCeexhH9S1lDRwpz3J7R6NW5z3tkrOAlRnL0Sh2DoEdfSt9yf1IU6m8VJ8Qh7gXMO65LNmJBZn0U$>
+
+
+
+  File Path: \Device\HarddiskVolume4\Users\cn-shyuanzhao\Downloads\PPOJIRABTD.exe
+
+
+
+  Process User: CORP\CN-shyuanzhao
+
+
+
+  Signature Status: SignedVerified
+
+
+
+  Originating Process: msedge.exe
+
+
+
+  SHA1: 2503fe5ad68dbabbc65300471536bbc967001466
+
+
+
+  Engine: Manual
+
+
+
+  Detection Type: dynamic
+
+
+
+  EndpointName: CN-XIYLD4J1QQ2
+
+
+
+  Account Scope: McD Market
+
+
+
+  Site Scope: China CORP
+
+
+
+  Group Scope: Workstations
+
+
+
+  Operating System: Windows 10 企业版
+
+
+
+  Agent Version: 22.1.4.10010
+
+
+
+  Policy: Deep Visibility Command
+
+
+
+  Last logged in user: CN-shyuanzhao
+
+
+
+  subscription Time: 2021-03-11T03:49:17.862342Z
+
+Regards,
+Prasanth
+MDR Analyst | Vigilance, SentinelOne
+
+
+
+
