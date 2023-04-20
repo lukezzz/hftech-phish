@@ -80,7 +80,7 @@ services:
         image: nginx
         restart: unless-stopped
         volumes:
-            - ./web-console/dist:/usr/share/nginx/web-console
+            - ./web-console/dist:/usr/share/nginx/web-clien
             - ./app-nginx/dev/conf.d:/etc/nginx/conf.d
             - ./app-nginx/dev/log/nginx:/var/log/nginx
             # - ./app-nginx/dev//certs:/etc/nginx/certs
