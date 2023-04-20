@@ -27,7 +27,9 @@ router = APIRouter(
     tags=["user_account_mgmt"],
     responses={404: {"detail": "Not found"}},
 )
-
+allow_create_user = PermissionChecker(
+    [PermissionType.can_read_any.value, PermissionType.can_api_read.value]
+)
 allow_get_resource = PermissionChecker(
     [PermissionType.can_read_any.value, PermissionType.can_api_read.value]
 )
@@ -36,9 +38,28 @@ allow_create_resource = PermissionChecker(
 allow_delete_resource = PermissionChecker(
     [PermissionType.can_delete_any.value])
 allow_edit_resource = PermissionChecker([PermissionType.can_edit_any.value])
-allow_create_user_and_change_password = PermissionChecker(
-    [PermissionType.can_create_user.value, PermissionType.can_change_password.value]
-)
+# allow_create_user_and_change_password = PermissionChecker(
+#     [PermissionType.can_create_user.value, PermissionType.can_change_password.value]
+# )
+
+
+@router.post("/verify")
+def verify_register(req: schemas.RegsiterVerify, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+    # Authorize.get_raw_jwt(token) 从token中解出用户信息 返回对象为dict
+    try:
+        res = services.verify_register(req, Authorize, db)
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.post("/register")
+def register_user(email: str, db: Session = Depends(get_db), Authorize: AuthJWT = Depends(),):
+    try:
+        res = services.user_register(Authorize, db, email)
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get(
@@ -58,43 +79,43 @@ def get_role_permissions(
         raise HTTPException(status_code=400, detail="Not found")
 
 
-@router.post(
-    "/create",
-    response_model=schemas.UserOut,
-    status_code=status.HTTP_201_CREATED,
-    dependencies=[Depends(allow_create_resource)],
-    **openapi_user_account_mgmt_create,
-)
-def create_new_user_account(
-    req: schemas.UserCreate = Body(
-        default=None,
-        examples={
-            "invalid1": {
-                "summary": "用户名长度小于等于3 或者 admin都无法创建",
-                "description": "用户名为**Foo**不能创建.",
-                "value": {
-                    "username": "Foo",
-                    "description": "A very nice Item",
-                    "password": "123",
-                },
-            },
-            "invalid2": {
-                "summary": "错误的字段",
-                "description": "email为**aaa.com**不能创建.",
-                "value": {"name": "aaaa", "password": "xxxxx", "email": "aaa.com"},
-            },
-        },
-    ),
-    db: Session = Depends(get_db),
-):
+# @router.post(
+#     "/create",
+#     response_model=schemas.UserOut,
+#     status_code=status.HTTP_201_CREATED,
+#     dependencies=[Depends(allow_create_resource)],
+#     **openapi_user_account_mgmt_create,
+# )
+# def create_new_user_account(
+#     req: schemas.UserCreate = Body(
+#         default=None,
+#         examples={
+#             "invalid1": {
+#                 "summary": "用户名长度小于等于3 或者 admin都无法创建",
+#                 "description": "用户名为**Foo**不能创建.",
+#                 "value": {
+#                     "username": "Foo",
+#                     "description": "A very nice Item",
+#                     "password": "123",
+#                 },
+#             },
+#             "invalid2": {
+#                 "summary": "错误的字段",
+#                 "description": "email为**aaa.com**不能创建.",
+#                 "value": {"name": "aaaa", "password": "xxxxx", "email": "aaa.com"},
+#             },
+#         },
+#     ),
+#     db: Session = Depends(get_db),
+# ):
 
-    user_account = services.get_user_account_by_username(db, req.username)
+#     user_account = services.get_user_account_by_username(db, req.username)
 
-    if user_account:
-        raise HTTPException(
-            status_code=400, detail="User account already existed")
+#     if user_account:
+#         raise HTTPException(
+#             status_code=400, detail="User account already existed")
 
-    return services.create_user_account(db, req)
+#     return services.create_user_account(db, req)
 
 
 @router.get(
@@ -202,7 +223,7 @@ def delete_sys_user(
 @router.patch(
     "/edit",
     response_model=schemas.UserOut,
-    dependencies=[Depends(allow_create_user_and_change_password)],
+    dependencies=[Depends(allow_edit_resource)],
     **openapi_user_account_mgmt_edit_by_user_id,
 )
 def update_user_account(
@@ -217,7 +238,7 @@ def update_user_account(
 @router.patch(
     "/change_password",
     response_model=schemas.UserOut,
-    dependencies=[Depends(allow_create_user_and_change_password)],
+    dependencies=[Depends(allow_edit_resource)],
     **openapi_user_account_mgmt_edit_by_user_id,
 )
 def update_self_password(
@@ -230,19 +251,19 @@ def update_self_password(
 
 
 # TODO
-@router.patch(
-    "/role/{user_account_id}",
-    response_model=schemas.UserOut,
-    dependencies=[Depends(allow_edit_resource)],
-    summary="设置user account权限",
-    deprecated=True,
-)
-def patch_user_account_role(
-    user_account_id: str,
-    db: Session = Depends(get_db),
-):
+# @router.patch(
+#     "/role/{user_account_id}",
+#     response_model=schemas.UserOut,
+#     dependencies=[Depends(allow_edit_resource)],
+#     summary="设置user account权限",
+#     deprecated=True,
+# )
+# def patch_user_account_role(
+#     user_account_id: str,
+#     db: Session = Depends(get_db),
+# ):
 
-    return {}
+#     return {}
 
 
 @router.get(
@@ -278,36 +299,8 @@ def get_long_term_token(
     expires = timedelta(days=365 * 99)
     access_token = Authorize.create_access_token(
         subject=current_user.id,
-        user_claims={"roles": [role.name for role in current_user.roles]},
+        user_claims={"role": current_user.role.name},
         expires_time=expires,
     )
 
     return access_token
-
-
-# @router.patch(
-#     "/role/{user_account_id}",
-#     response_model=schemas.UserOut,
-#     dependencies=[Depends(allow_edit_resource)],
-#     summary="设置user account权限",
-# )
-# def patch_user_account_role(
-#     user_account_id: str,
-#     role: schemas.SysUserRolePatch,
-#     db: Session = Depends(get_db),
-# ):
-#     """
-#     不能修改admin和当前用户自己的角色， 只允许super权限修改其他用户权限
-#     """
-#     role_patch_user = services.get_user_account_by_id(db, user_id=user_account_id)
-
-#     if not role_patch_user:
-#         raise HTTPException(status_code=404, detail="No user found")
-
-#     if role_patch_user.username == "admin":
-#         raise HTTPException(status_code=403, detail="Can not change super admin")
-
-#     # if user_account_id == current_user.id:
-#     #     raise HTTPException(status_code=403, detail="Can not change self role")
-
-#     return services.update_user_account_role(db, role.value, role_patch_user)

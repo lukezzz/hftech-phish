@@ -42,9 +42,10 @@ services:
         hostname: app-db
         command: postgres -c listen_addresses='*'
         environment:
-            - POSTGRES_USER=foresight
-            - POSTGRES_PASSWORD=foresight
-            - POSTGRES_DB=foresight
+            - POSTGRES_USER=phish
+            - POSTGRES_PASSWORD=phish
+            - POSTGRES_DB=phish
+            
             # Uncomment these lines to persist data on the local filesystem.
             - PGDATA=/var/lib/postgresql/data/pgdata
         volumes:

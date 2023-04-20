@@ -1,25 +1,86 @@
+from fastapi.exceptions import HTTPException
 from sqlalchemy.orm import Session
 from typing import Any
-from app.models import UserAccount, Role
-from app.schemas import UserCreate, UserBase, UserPatch, UserPassword
+from app.models import UserAccount, Role, UserRegister
+from app.schemas import UserBase, UserPatch, UserPassword
 from app.common.security import get_password_hash
+from app.services.send_mail import send_mail
 from fastapi.param_functions import Form
+import uuid
+import re
 
 
 class LoginWithCookieForm:
     def __init__(
         self,
-        username: str = Form(...),
+        email: str = Form(...),
         password: str = Form(...),
         remember: bool = Form(...),
     ):
-        self.username = username
+        self.email = email
         self.password = password
         self.remember = remember
 
 
+def is_email(email):
+    # 正则表达式匹配Email地址的格式
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    return re.match(pattern, email) is not None
+
 # from app.common.user_preference import SysRoleTypes
-from fastapi.exceptions import HTTPException
+
+# 注册方法
+
+
+def user_register(auth, db: Session, email: str):
+    # 判断email格式
+    if not is_email(email):
+        raise Exception("email格式有误")
+
+    # 查询注册数据库中是否已存在当前邮箱
+    obj = db.query(UserRegister).filter(UserRegister.email == email).first()
+    if obj:
+        raise Exception("email已经注册")
+
+    # 向数据库中插入注册信息
+    random_uuid = uuid.uuid4()
+    register_id = str(random_uuid)
+    db_obj = UserRegister(id=register_id, email=email, is_success=False)
+    db.add(db_obj)
+    db.commit()
+    db.refresh(db_obj)
+
+    # auth.create_access_token 生成注册key 并发邮件给用户
+    register_key = auth.create_access_token(
+        subject=register_id, user_claims={"email": email}
+    )
+    # TODO 运行airflow发送邮件给email
+    send_mail(email, register_key)
+    return register_key
+# 注册验证方法
+
+
+def verify_register(req, auth, db: Session):
+    # 尝试解出token中的注册信息，无法接触则抛出"token信息有误"错误
+    try:
+        register_info = auth.get_raw_jwt(req.token)
+    except:
+        raise Exception("token信息有误")
+    # 验证注册表中是否存在此id 以及对应db对象的email是否与token中的email一致，不一致或者对象不存在，则抛出"token信息有误"错误
+    register_db_obj = db.query(UserRegister).filter(
+        UserRegister.id == register_info["sub"]).first()
+    if not register_db_obj:
+        raise Exception("token信息有误")
+    if not register_db_obj.email == register_info["email"]:
+        raise Exception("token信息有误")
+    # 添加用户
+    user_db_obj = create_user_account(db, req, register_info["email"])
+    # 修改注册表中是否注册成功的状态为True
+    register_db_obj.is_success = True
+    db.add(register_db_obj)
+    db.commit()
+    db.refresh(register_db_obj)
+    return user_db_obj
 
 
 def get_user_account_by_username(db: Session, username: str) -> Any:
@@ -30,19 +91,23 @@ def get_user_account_by_id(db: Session, user_account_id: str) -> Any:
     return db.query(UserAccount).filter(UserAccount.id == user_account_id).first()
 
 
-def create_user_account(db: Session, req: UserCreate):
+def create_user_account(db: Session, req: UserRegister, email: str):
 
     try:
         password_hashed = get_password_hash(req.password)
-
         user_data = req.dict(exclude_none=True)
         del user_data["password"]
 
         del user_data["role"]
-
+        del user_data["token"]
         user_data["password_hashed"] = password_hashed
+        obj_user = db.query(UserAccount).filter(
+            UserAccount.username == user_data["username"]).first()
+        if obj_user:
+            raise Exception("用户名已存在")
 
         user_post = UserAccount(**user_data)
+        user_post.email = email
         db.add(user_post)
 
         role = db.query(Role).filter(Role.name == req.role).first()
@@ -55,10 +120,7 @@ def create_user_account(db: Session, req: UserCreate):
 
     except Exception as err:
         db.rollback()
-        raise HTTPException(
-            status_code=500,
-            detail=err,
-        )
+        raise Exception(err)
 
 
 def delete_user_account(db: Session, user: UserBase):
@@ -111,21 +173,3 @@ def change_password(db: Session, new_password: UserPassword, current_user: UserA
     db.commit()
     db.refresh(current_user)
     return current_user
-
-
-# TODO role -> udpate list
-# def update_user_account_role(db: Session, role: int, patch_user: any):
-
-#     try:
-#         post_role = db.query(Role).filter_by(id=role).first()
-#         patch_user.roles = post_role
-
-#         db.commit()
-#         db.refresh(patch_user)
-#         return patch_user
-#     except Exception as err:
-#         db.rollback()
-#         raise HTTPException(
-#             status_code=500,
-#             detail=err,
-#         )

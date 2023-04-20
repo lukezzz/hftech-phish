@@ -20,7 +20,6 @@ from app.openapidoc import openapi_auth_login, openapi_auth_logout
 from app.models import UserAccount
 
 redis_conn = redis.StrictRedis.from_url(settings.AUTH_REDIS_URI, decode_responses=True)
-# redis_conn = aioredis.from_url(settings.AUTH_REDIS_URI, decode_responses=True)
 
 router = APIRouter(
     route_class=HandleResponseRoute,
@@ -43,7 +42,7 @@ async def login_for_access_token(
     form_data: services.LoginWithCookieForm = Depends(),
     Authorize: AuthJWT = Depends(),
 ):
-    user = services.auth_user(db, form_data.username, form_data.password)
+    user = services.auth_user(db, form_data.email, form_data.password)
 
     if form_data.remember == True:
         Authorize._cookie_max_age = settings.COOKIE_AGE
@@ -60,29 +59,9 @@ async def login_for_access_token(
     Authorize.set_access_cookies(access_token, response)
     Authorize.set_refresh_cookies(refresh_token, response)
 
-    # services.insert_event(
-    #     db=db,
-    #     category=services.EventCategory.user_login,
-    #     req={"username": form_data.username, "ip": request.client.host},
-    #     user_id=form_data.username,
-    # )
 
     return response
 
-
-# Standard refresh endpoint. Token in denylist will not
-# be able to access this endpoint
-# @router.post("/refresh", summary="刷新 access_token")
-# def refresh(db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
-#     Authorize.jwt_refresh_token_required()
-
-#     user_id = Authorize.get_jwt_subject()
-#     user = services.get_admin_by_user_id(db, user_id)
-#     new_access_token = Authorize.create_access_token(
-#         subject=user.id, user_claims={"role": user.role.name}
-#     )
-#     Authorize.set_access_cookies(new_access_token)
-#     return {"success": True, "data": "The token has been refresh"}
 
 
 @router.post("/logout", **openapi_auth_logout)
@@ -100,13 +79,6 @@ async def logout(
 
         current_user_id = Authorize.get_jwt_subject()
         user: UserAccount = services.get_user_account_by_id(db, current_user_id)
-        # services.insert_event(
-        #     db=db,
-        #     category=services.EventCategory.user_logout,
-        #     req={"username": user.username, "ip": request.client.host},
-        #     user_id=user.username,
-        # )
-
         return {
             "success": True,
             "data": "Logout successfully",

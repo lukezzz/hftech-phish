@@ -9,7 +9,7 @@ AUTHJWT_DENYLIST_ENABLED=True
 COOKIE_AGE=259200
 
 TEST_DB_URI=sqlite:////:memory:
-APP_DB_URI=postgresql://foresight:foresight@app-db:5432/foresight
+APP_DB_URI=postgresql://phish:phish@app-db:5432/phish
 AUTH_REDIS_URI=redis://app-redis/0
 MESSAGE_REDIS_URI=redis://app-redis/2
 

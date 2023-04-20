@@ -6,17 +6,17 @@ from typing import Any
 from fastapi.exceptions import HTTPException
 
 
-def auth_user(db: Session, username: str, password: str) -> Any:
-    user = db.query(UserAccount).filter_by(username=username).first()
+def auth_user(db: Session, email: str, password: str) -> Any:
+    user = db.query(UserAccount).filter_by(email=email).first()
 
     if not user:
         raise HTTPException(
             status_code=401,
-            detail="Bad username or password",
+            detail="Bad email or password",
         )
     if not verify_password(password, user.password_hashed):
         raise HTTPException(
             status_code=401,
-            detail="Bad username or password",
+            detail="Bad email or password",
         )
     return user

@@ -2,14 +2,12 @@ from sqlalchemy.orm import Session
 from enum import Enum
 
 from app.models.aaa import Permission, Role, UserAccount
-from app.models.system import Space
-from app.models.o365 import O365ForwardRule
 
 
 class RoleNames(Enum):
     admin = "admin"
-    operator = "operator"
-    api = "api"
+    user = "user"
+    guest = "guest"
 
 
 class DefaultPermissionRules(Enum):
@@ -59,6 +57,7 @@ def init_aaa(db: Session):
             admin = UserAccount()
             admin.username = "admin"
             admin.display_name = "admin"
+            admin.email = "admin@admin.com"
             admin.set_password("secret")
             admin.role = admin_role
             db.add(admin)
@@ -68,19 +67,6 @@ def init_aaa(db: Session):
         print(e)
         db.rollback()
 
-
-# add default spaces
-def init_sys(db: Session):
-    try:
-        default_space = db.query(Space).filter_by(name="default").first()
-        if not default_space:
-            db.add(Space(name="default"))
-
-        db.commit()
-
-    except Exception as e:
-        print(e)
-        db.rollback()
 
 
 

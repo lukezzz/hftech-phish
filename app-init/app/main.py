@@ -9,8 +9,7 @@ from app.config import settings
 from app.common.fastapi_logger import fastapi_logger
 
 from app.db.session import engine, SessionLocal
-from app.init.init_db import init_aaa, init_sys, init_mail_forward_rule
-
+from app.init.init_db import init_aaa
 from app.init.init_airflow import init_airflow, enable_airflow_dags
 
 # Base.metadata.create_all(bind=engine)
@@ -47,7 +46,7 @@ async def init_db_defaults():
     init_aaa(db)
 
     # init sys
-    init_sys(db)
+    # init_sys(db)
 
 
     # init airflow
