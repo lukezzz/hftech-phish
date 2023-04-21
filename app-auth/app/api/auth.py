@@ -3,7 +3,8 @@ from sqlalchemy.orm import Session
 from fastapi_jwt_auth import AuthJWT
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
-
+from airflow_client.client.model.dag_run import DAGRun
+from airflow_client.client.api_client import ApiClient
 from app import services, schemas
 from app.config import settings
 
@@ -39,10 +40,11 @@ def verify_register(req: schemas.RegisterVerify, db: Session = Depends(get_db), 
 
 
 @router.post("/register")
-def register_user(req:schemas.UserRegister, db: Session = Depends(get_db), Authorize: AuthJWT = Depends(),):
+def register_user(req:schemas.UserRegister, db: Session = Depends(get_db), Authorize: AuthJWT = Depends(),api:ApiClient=Depends(services.airflow_dag_run)):
     try:
-        res = services.user_register(Authorize, db, req.email)
-        return "注册成功，邮件已发送"
+        res = services.user_register(Authorize, db, req.email,api)
+        return res
+      
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 

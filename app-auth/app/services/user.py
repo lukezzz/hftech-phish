@@ -4,8 +4,13 @@ from typing import Any
 from app.models import UserAccount, Role, UserRegister
 from app.schemas import UserBase, UserPatch, UserPassword
 from app.common.security import get_password_hash
-from app.services.send_mail import send_mail
 from fastapi.param_functions import Form
+
+from airflow_client.client.model.dag_run import DAGRun
+from airflow_client.client.api_client import ApiClient
+from datetime import datetime
+
+
 import uuid
 import re
 
@@ -32,7 +37,7 @@ def is_email(email):
 # 注册方法
 
 
-def user_register(auth, db: Session, email: str):
+def user_register(auth, db: Session, email: str, api):
     # 判断email格式
     if not is_email(email):
         raise Exception("email格式有误")
@@ -42,21 +47,34 @@ def user_register(auth, db: Session, email: str):
     if obj:
         raise Exception("email已经注册")
 
-    # 向数据库中插入注册信息
+    
     random_uuid = uuid.uuid4()
     register_id = str(random_uuid)
-    db_obj = UserRegister(id=register_id, email=email, is_success=False)
-    db.add(db_obj)
-    db.commit()
-    db.refresh(db_obj)
 
     # auth.create_access_token 生成注册key 并发邮件给用户
     register_key = auth.create_access_token(
         subject=register_id, user_claims={"email": email}
     )
-    # TODO 运行airflow发送邮件给email
-    send_mail(email, register_key)
-    return register_key
+    dag_id = "mail_user_register"
+    config = {
+        "dag_run_id": f"phish_mail_user_register_{datetime.timestamp(datetime.now())}",
+        "conf":
+        {"mail_to": email,
+            "token": register_key}
+    }
+    dag_run = DAGRun(**config)
+    api_response: DAGRun = api.post_dag_run(dag_id, dag_run)
+    print("api_response", api_response)
+    
+    # 向数据库中插入注册信息
+    db_obj = UserRegister(id=register_id, email=email, is_success=False)
+    db.add(db_obj)
+    db.commit()
+    db.refresh(db_obj)
+
+    
+
+    return "邮件已发送"
 # 注册验证方法
 
 

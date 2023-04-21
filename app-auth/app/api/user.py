@@ -22,6 +22,7 @@ from app.common.security import PermissionChecker, PermissionType, get_current_u
 from fastapi_jwt_auth import AuthJWT
 from datetime import timedelta
 
+
 router = APIRouter(
     route_class=HandleResponseRoute,
     tags=["user_account_mgmt"],
@@ -38,11 +39,6 @@ allow_create_resource = PermissionChecker(
 allow_delete_resource = PermissionChecker(
     [PermissionType.can_delete_any.value])
 allow_edit_resource = PermissionChecker([PermissionType.can_edit_any.value])
-
-
-
-
-
 
 @router.get(
     "/role",
