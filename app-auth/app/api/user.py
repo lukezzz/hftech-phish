@@ -38,28 +38,10 @@ allow_create_resource = PermissionChecker(
 allow_delete_resource = PermissionChecker(
     [PermissionType.can_delete_any.value])
 allow_edit_resource = PermissionChecker([PermissionType.can_edit_any.value])
-# allow_create_user_and_change_password = PermissionChecker(
-#     [PermissionType.can_create_user.value, PermissionType.can_change_password.value]
-# )
 
 
-@router.post("/verify")
-def verify_register(req: schemas.RegsiterVerify, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
-    # Authorize.get_raw_jwt(token) 从token中解出用户信息 返回对象为dict
-    try:
-        res = services.verify_register(req, Authorize, db)
-        return res
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.post("/register")
-def register_user(email: str, db: Session = Depends(get_db), Authorize: AuthJWT = Depends(),):
-    try:
-        res = services.user_register(Authorize, db, email)
-        return res
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get(
@@ -77,46 +59,6 @@ def get_role_permissions(
         return res
     except:
         raise HTTPException(status_code=400, detail="Not found")
-
-
-# @router.post(
-#     "/create",
-#     response_model=schemas.UserOut,
-#     status_code=status.HTTP_201_CREATED,
-#     dependencies=[Depends(allow_create_resource)],
-#     **openapi_user_account_mgmt_create,
-# )
-# def create_new_user_account(
-#     req: schemas.UserCreate = Body(
-#         default=None,
-#         examples={
-#             "invalid1": {
-#                 "summary": "用户名长度小于等于3 或者 admin都无法创建",
-#                 "description": "用户名为**Foo**不能创建.",
-#                 "value": {
-#                     "username": "Foo",
-#                     "description": "A very nice Item",
-#                     "password": "123",
-#                 },
-#             },
-#             "invalid2": {
-#                 "summary": "错误的字段",
-#                 "description": "email为**aaa.com**不能创建.",
-#                 "value": {"name": "aaaa", "password": "xxxxx", "email": "aaa.com"},
-#             },
-#         },
-#     ),
-#     db: Session = Depends(get_db),
-# ):
-
-#     user_account = services.get_user_account_by_username(db, req.username)
-
-#     if user_account:
-#         raise HTTPException(
-#             status_code=400, detail="User account already existed")
-
-#     return services.create_user_account(db, req)
-
 
 @router.get(
     "/search",

@@ -6,7 +6,7 @@ from email_validator import validate_email, EmailNotValidError
 from pydantic import BaseModel, validator
 
 
-class RegsiterVerify(BaseModel):
+class RegisterVerify(BaseModel):
     token: str = Field(example="xxxxxxxxx.xxxxxxxx")
     username: str = Field(example="pengsy")
     password: str = Field(example="*****")
@@ -25,10 +25,17 @@ class RegsiterVerify(BaseModel):
         return password
 
 
-# class UserCreate(BaseModel):
-#     username: str = Field(example="pengsy")
-#     password: str = Field(example="*****")
-#     role: str = Field(example="admin")
+class UserRegister(BaseModel):
+    email: str = Field(example="admin@admin.com")
+
+    @validator("email")
+    def validate_email(cls: Any, email: str, **kwargs: Any) -> Any:
+        try:
+            valid = validate_email(email)
+            # Update with the normalized form.
+            return valid.email
+        except EmailNotValidError as e:
+            raise ValueError(e)
 
 
 class UserLogin(BaseModel):
