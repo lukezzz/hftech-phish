@@ -10,7 +10,6 @@ class RegisterVerify(BaseModel):
     token: str = Field(example="xxxxxxxxx.xxxxxxxx")
     username: str = Field(example="pengsy")
     password: str = Field(example="*****")
-    role: str = Field(example="admin")
 
     @validator("username")
     def validate_username(cls: Any, username: str, **kwargs: Any) -> Any:

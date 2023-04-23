@@ -45,11 +45,13 @@ def user_register(auth, db: Session, email: str, api):
     # 查询注册数据库中是否已存在当前邮箱
     obj = db.query(UserRegister).filter(UserRegister.email == email).first()
     if obj:
-        raise Exception("email已经注册")
-
-    
-    random_uuid = uuid.uuid4()
-    register_id = str(random_uuid)
+        if obj.is_success == True:
+            raise Exception("email已经注册")
+        else:
+            register_id = obj.id
+    else:
+        random_uuid = uuid.uuid4()
+        register_id = str(random_uuid)
 
     # auth.create_access_token 生成注册key 并发邮件给用户
     register_key = auth.create_access_token(
@@ -64,15 +66,13 @@ def user_register(auth, db: Session, email: str, api):
     }
     dag_run = DAGRun(**config)
     api_response: DAGRun = api.post_dag_run(dag_id, dag_run)
-    print("api_response", api_response)
-    
-    # 向数据库中插入注册信息
-    db_obj = UserRegister(id=register_id, email=email, is_success=False)
-    db.add(db_obj)
-    db.commit()
-    db.refresh(db_obj)
-
-    
+    print(register_key)
+    # 如果邮箱是首次注册 则向数据库中插入注册信息
+    if not obj:
+        db_obj = UserRegister(id=register_id, email=email, is_success=False)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
 
     return "邮件已发送"
 # 注册验证方法
@@ -82,14 +82,17 @@ def verify_register(req, auth, db: Session):
     # 尝试解出token中的注册信息，无法接触则抛出"token信息有误"错误
     try:
         register_info = auth.get_raw_jwt(req.token)
+        print(register_info)
     except:
         raise Exception("token信息有误")
     # 验证注册表中是否存在此id 以及对应db对象的email是否与token中的email一致，不一致或者对象不存在，则抛出"token信息有误"错误
     register_db_obj = db.query(UserRegister).filter(
         UserRegister.id == register_info["sub"]).first()
     if not register_db_obj:
+        print(1)
         raise Exception("token信息有误")
     if not register_db_obj.email == register_info["email"]:
+        print(2)
         raise Exception("token信息有误")
     # 添加用户
     user_db_obj = create_user_account(db, req, register_info["email"])
@@ -115,8 +118,6 @@ def create_user_account(db: Session, req: UserRegister, email: str):
         password_hashed = get_password_hash(req.password)
         user_data = req.dict(exclude_none=True)
         del user_data["password"]
-
-        del user_data["role"]
         del user_data["token"]
         user_data["password_hashed"] = password_hashed
         obj_user = db.query(UserAccount).filter(
@@ -128,7 +129,7 @@ def create_user_account(db: Session, req: UserRegister, email: str):
         user_post.email = email
         db.add(user_post)
 
-        role = db.query(Role).filter(Role.name == req.role).first()
+        role = db.query(Role).filter(Role.name == "user").first()
         if role:
             user_post.role = role
 

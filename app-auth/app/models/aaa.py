@@ -53,38 +53,3 @@ class UserAccount(BaseModel):
 
     def set_password(self, password):
         self.password_hashed = get_password_hash(password)
-
-# class User(BaseModel):
-#     __tablename__ = 'users'
-
-#     id = Column(Integer, primary_key=True)
-#     username = Column(String(255), nullable=False)
-#     display_name = Column(String(255), nullable=False)
-#     email = Column(String(255), nullable=False)
-#     phone = Column(String(255), nullable=False)
-#     hash = Column(String(255))
-#     role_id = Column(Integer,ForeignKey('roles.id'))
-#     role = relationship('Role', back_populates='users')
-#     last_login = Column(DateTime)
-#     account_locked = Column(Boolean, default=True)
-#     vip_account = Column(Boolean, default=True)
-
-
-# t_role_permissions = Table(
-#     'role_permissions', metadata,
-#     Column('role_id', Integer, nullable=False),
-#     Column('permission_id', Integer, nullable=False)
-# )
-
-
-# class Role(BaseModel):
-#     __tablename__ = 'roles'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String(255), nullable=False)
-#     users = relationship('User', back_populates='role')
-
-
-# class Permission(BaseModel):
-#     __tablename__ = 'permissions'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String(255), nullable=False)
