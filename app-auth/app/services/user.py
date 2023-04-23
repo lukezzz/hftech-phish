@@ -55,7 +55,7 @@ def user_register(auth, db: Session, email: str, api):
 
     # auth.create_access_token 生成注册key 并发邮件给用户
     register_key = auth.create_access_token(
-        subject=register_id, user_claims={"email": email}
+        subject=register_id, user_claims={"email": email},expires_time=3600
     )
     dag_id = "mail_user_register"
     config = {
@@ -66,7 +66,6 @@ def user_register(auth, db: Session, email: str, api):
     }
     dag_run = DAGRun(**config)
     api_response: DAGRun = api.post_dag_run(dag_id, dag_run)
-    print(register_key)
     # 如果邮箱是首次注册 则向数据库中插入注册信息
     if not obj:
         db_obj = UserRegister(id=register_id, email=email, is_success=False)
@@ -82,17 +81,14 @@ def verify_register(req, auth, db: Session):
     # 尝试解出token中的注册信息，无法接触则抛出"token信息有误"错误
     try:
         register_info = auth.get_raw_jwt(req.token)
-        print(register_info)
     except:
         raise Exception("token信息有误")
     # 验证注册表中是否存在此id 以及对应db对象的email是否与token中的email一致，不一致或者对象不存在，则抛出"token信息有误"错误
     register_db_obj = db.query(UserRegister).filter(
         UserRegister.id == register_info["sub"]).first()
     if not register_db_obj:
-        print(1)
         raise Exception("token信息有误")
     if not register_db_obj.email == register_info["email"]:
-        print(2)
         raise Exception("token信息有误")
     # 添加用户
     user_db_obj = create_user_account(db, req, register_info["email"])

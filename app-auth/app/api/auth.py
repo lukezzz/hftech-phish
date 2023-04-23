@@ -30,19 +30,19 @@ router = APIRouter(
 
 
 @router.post("/verify")
-def verify_register(req: schemas.RegisterVerify, db: Session = Depends(get_db), Authorize: AuthJWT = Depends()):
+def verify_register(req: schemas.RegisterVerify, db: Session = Depends(get_db), authorize: AuthJWT = Depends()):
     # Authorize.get_raw_jwt(token) 从token中解出用户信息 返回对象为dict
     try:
-        res = services.verify_register(req, Authorize, db)
+        res = services.verify_register(req, authorize, db)
         return res
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.post("/register")
-def register_user(req:schemas.UserRegister, db: Session = Depends(get_db), Authorize: AuthJWT = Depends(),api:ApiClient=Depends(services.airflow_dag_run)):
+def register_user(req:schemas.UserRegister, db: Session = Depends(get_db), authorize: AuthJWT = Depends(),api:ApiClient=Depends(services.airflow_dag_run)):
     try:
-        res = services.user_register(Authorize, db, req.email,api)
+        res = services.user_register(authorize, db, req.email,api)
         return res
       
     except Exception as e:
@@ -105,7 +105,6 @@ async def logout(
             "errorMessage": "",
         }
     except Exception as e:
-        print(e)
         return {"success": True}
 
 
